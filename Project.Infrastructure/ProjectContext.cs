@@ -7,12 +7,21 @@ using Project.Infrastructure.EntityConfigurations;
 
 namespace Project.Infrastructure {
     public class ProjectContext : DbContext {
+        public ProjectContext() { }
+
+        public ProjectContext(DbContextOptions<ProjectContext> options)
+            : base(options) { }
+
         public DbSet<Business> Businesses { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void
             OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            base.OnConfiguring(optionsBuilder);
+            if (optionsBuilder.IsConfigured) {
+                base.OnConfiguring(optionsBuilder);
+                return;
+            }
+
             optionsBuilder.UseSqlServer(
                 "Data Source=(local);Initial Catalog=EFTest;user id=sa;password=estep;");
             // mySql
@@ -26,7 +35,7 @@ namespace Project.Infrastructure {
                     q.GetInterface(typeof(IEntityTypeConfiguration<>).FullName) !=
                     null);
             foreach (var type in typesToRegister) {
-                if(type == typeof(EntityTypeConfiguration<>))
+                if (type == typeof(EntityTypeConfiguration<>))
                     continue;
                 dynamic configurationInstance = Activator.CreateInstance(type);
                 modelBuilder.ApplyConfiguration(configurationInstance);

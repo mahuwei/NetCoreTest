@@ -1,29 +1,70 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Project.Domain;
 using Project.Infrastructure;
 
 namespace Project.ConsoleApp {
     internal class Program {
         private static void Main(string[] args) {
             Console.WriteLine("Hello World!");
+            var rowCount = 0;
+            ulong rowFlag;
 
             using (var dc = new ProjectContext()) {
                 dc.Database.Migrate();
-                //var business = new Business {Id = Guid.NewGuid(),Status = 0,LastChange = DateTime.Now,No = "001",Name = "测试商户"};
-                //dc.Businesses.Add(business);
-                //var rowCount = dc.SaveChanges();
+                if (dc.Businesses.Any() == false) {
+                    var business = new Business {
+                        Id = Guid.NewGuid(), Status = 0, LastChange = DateTime.Now,
+                        No = "001", Name = "测试商户"
+                    };
+                    dc.Businesses.Add(business);
+                    rowCount = dc.SaveChanges();
+                    rowFlag = BitConverter.ToUInt64(business.RowFlag);
+                    Console.WriteLine($"新增记录：{rowCount}行，行标识:{rowFlag}");
+                }
+            }
 
-                var business = dc.Businesses.First();
-                var rowVersion = BitConverter.ToInt64(business.RowFlag, 0);
-                var getNow = DateTime.FromBinary(rowVersion);
-                var s = new NumberToBytesConverter<UInt64>();
-                
-
+            Business businessInDb; 
+            using (var dc = new ProjectContext()) {
+                Console.WriteLine("\n读取然后直接修改，查看行标识....");
+                businessInDb = dc.Businesses.First();
+                rowFlag = BitConverter.ToUInt64(businessInDb.RowFlag);
                 Console.WriteLine(
-                    $"变更记录数:{1} 新增记录行标识：{rowVersion}");
+                    $"读取记录，行标识：{rowFlag}");
+
+                businessInDb.Status++;
+                rowCount = dc.SaveChanges();
+                var rowFlagUpdate =  BitConverter.ToUInt64(businessInDb.RowFlag);
+                Console.WriteLine($"修改记录：{rowCount}行，行标识:{rowFlagUpdate}，读取时和修改后的行标识相同：{rowFlagUpdate == rowFlag}");
+            }
+
+            using (var dc = new ProjectContext()) {
+                Console.WriteLine("\n重建连接后，直接修改(DbSet.Update)，查看行标识....");
+                businessInDb.Status++;
+                var rowFlagSource =  BitConverter.ToUInt64(businessInDb.RowFlag);
+                var changeTracking = dc.Businesses.Update(businessInDb);
+                rowCount = dc.SaveChanges();
+                rowFlag = BitConverter.ToUInt64(businessInDb.RowFlag);
+                
+                Console.WriteLine($"修改记录：{rowCount}行，行标识:{rowFlagSource}，读取时和修改后的行标识相同：{rowFlagSource == rowFlag}，\n不相同说明可以使用这种办法修改，但由于修改前需要判断行标识，所以没什么意义！");
+                rowFlag = BitConverter.ToUInt64(changeTracking.Entity.RowFlag);
+                Console.WriteLine($"修改记录：{rowCount}行，行标识:{rowFlagSource}，读取时和changeTracking的行标识相同：{rowFlagSource == rowFlag}");
+            }
+
+            using (var dc = new ProjectContext()) {
+                Console.WriteLine("\n重建连接后，直接修改(DbSet.Update)，查看行标识....");
+                var businssSource = dc.Businesses.Find(businessInDb.Id);
+                businessInDb.Status++;
+                var rowFlagSource =  BitConverter.ToUInt64(businessInDb.RowFlag);
+                //var changeTracking = dc.Businesses.Update(businessInDb);
+                dc.Entry(businssSource).CurrentValues.SetValues(businessInDb);
+                rowCount = dc.SaveChanges();
+                rowFlag = BitConverter.ToUInt64(businessInDb.RowFlag);
+                
+                Console.WriteLine($"修改记录：{rowCount}行，行标识:{rowFlagSource}，读取时和修改后的行标识相同：{rowFlagSource == rowFlag}");
+                rowFlag = BitConverter.ToUInt64(businssSource.RowFlag);
+                Console.WriteLine($"修改记录：{rowCount}行，行标识:{rowFlagSource}，读取时和(Entry(businssSource).CurrentValues.SetValues(businessInDb)的行标识相同：{rowFlagSource == rowFlag} \n 应该是不相同的，以前就一直用这种办法进行修改。");
             }
 
             Console.ReadLine();

@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
 using Project.Domain;
 using Project.Infrastructure;
 
@@ -10,12 +11,25 @@ namespace Project.ConsoleApp {
         private static void Main(string[] args) {
             Console.WriteLine("Hello World!");
             //RowVersionTest();
-            var servicesProvider = NLogTest.BuildDi();
-            var runner = servicesProvider.GetRequiredService<NLogTest>();
-            runner.DoAction("Action1");
+
+            #region NLog
+
+            //var servicesProvider = NLogTest.BuildDi();
+            //var runner = servicesProvider.GetRequiredService<NLogTest>();
+            //runner.DoAction("Action1");
+            //LogManager.Shutdown();
+
+            #endregion
+
+
+            #region SerilogTest
+
+            SerilogTest.Test();
+
+            #endregion
+
             Console.ReadLine();
             // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-            NLog.LogManager.Shutdown(); 
         }
 
         private static void RowVersionTest() {

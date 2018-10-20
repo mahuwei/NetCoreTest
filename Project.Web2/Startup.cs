@@ -22,6 +22,7 @@ namespace Project.Web2 {
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwagger();
+            services.AddSignalR();
 
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
@@ -47,6 +48,8 @@ namespace Project.Web2 {
                 settings.GeneratorSettings.DefaultPropertyNameHandling =
                     PropertyNameHandling.CamelCase;
             });
+
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chatHub"); });
 
             app.UseMvc();
         }

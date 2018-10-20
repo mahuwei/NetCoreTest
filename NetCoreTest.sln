@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Web2", "Project.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Web2.Test", "Project.Web2.Test\Project.Web2.Test.csproj", "{A013D4AD-F3CA-4684-BED4-68BAEEBA567A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.SignalR.Test", "Project.SignalR.Test\Project.SignalR.Test.csproj", "{4319DC92-DE05-4DEB-B034-59FA73C1466E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A013D4AD-F3CA-4684-BED4-68BAEEBA567A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A013D4AD-F3CA-4684-BED4-68BAEEBA567A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A013D4AD-F3CA-4684-BED4-68BAEEBA567A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4319DC92-DE05-4DEB-B034-59FA73C1466E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4319DC92-DE05-4DEB-B034-59FA73C1466E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4319DC92-DE05-4DEB-B034-59FA73C1466E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4319DC92-DE05-4DEB-B034-59FA73C1466E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

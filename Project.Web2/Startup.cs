@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Reflection;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NJsonSchema;
 using NSwag.AspNetCore;
 using Project.Web2.Models;
+using Project.Web2.Models.MediatRTest;
 
 namespace Project.Web2 {
     public class Startup {
@@ -36,6 +40,12 @@ namespace Project.Web2 {
                             new TerminalAppAuthorizationRequirement());
                     });
             });
+
+            //services.AddTransient(typeof(IRequestHandler<,>), typeof(RequestHandler<,>));
+            //var assembly = AppDomain.CurrentDomain.Load("Project.Web2");
+            //services.AddMediatR(typeof(PingHandler).GetTypeInfo().Assembly);
+
+            services.AddMediatR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +60,7 @@ namespace Project.Web2 {
             });
 
             app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chatHub"); });
+            
 
             app.UseMvc();
         }

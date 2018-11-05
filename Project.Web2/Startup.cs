@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -41,10 +42,14 @@ namespace Project.Web2 {
                     });
             });
 
-            //services.AddTransient(typeof(IRequestHandler<,>), typeof(RequestHandler<,>));
-            //var assembly = AppDomain.CurrentDomain.Load("Project.Web2");
-            //services.AddMediatR(typeof(PingHandler).GetTypeInfo().Assembly);
+            const string applicationAssemblyName = "Project.Domain";
+            var assembly = AppDomain.CurrentDomain.Load(applicationAssemblyName);
 
+            AssemblyScanner
+                .FindValidatorsInAssembly(assembly)
+                .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
             services.AddMediatR();
         }
 

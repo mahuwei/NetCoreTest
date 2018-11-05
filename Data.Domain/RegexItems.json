@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Num",
+    "nameCn": "数字",
+    "regexString": "^[0-9]*$",
+    "errorMessage":"只能输入数字。" 
+  },
+  {
+    "name": "NumAndChar",
+    "nameCn": "数字和字符",
+    "regexString": "^[A-Za-z0-9]+$",
+    "errorMessage": "只能输入数字和字符。"
+  },
+  {
+    "name": "NCC",
+    "nameCn": "数字、字符、中文、下划线、减号",
+    "regexString": "^[\u4E00-\u9FA5A-Za-z0-9_-]+$",
+    "errorMessage": "只能输入数字、字符、汉字、下划线以及减号。"
+  },
+  {
+    "name": "MobileNo",
+    "nameCn": "手机号",
+    "regexString": "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$",
+    "errorMessage": "手机号码格式不正确。"
+  }
+]

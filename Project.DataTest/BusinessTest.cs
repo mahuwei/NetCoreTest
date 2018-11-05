@@ -3,11 +3,27 @@ using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Project.Domain;
+using Project.Domain.Validations;
 using Project.Infrastructure;
 using Xunit;
 
 namespace Project.DataTest {
     public class BusinessTest {
+        [Fact]
+        public void ValidationTest() {
+            var business =  new Business {
+                Id = Guid.NewGuid(), Status = 0, LastChange = DateTime.Now,
+                No = "A1111", Name = ""
+            };
+
+            var bv = new BusinessValidator();
+            var result = bv.Validate(business);
+            Assert.False(result.IsValid);
+            
+            Assert.Equal("商户名称只能输入中文、数字、字符。",result.Errors.First().ErrorMessage);
+            Assert.Equal(1, result.Errors.Count);
+        }
+
         [Fact]
         public void Add() {
             var options = new DbContextOptionsBuilder<ProjectContext>()

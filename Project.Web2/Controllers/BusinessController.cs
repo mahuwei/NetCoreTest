@@ -16,7 +16,7 @@ namespace Project.Web2.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Business business) {
-            var response = await _mediator.Send(business).ConfigureAwait(false);
+            var response = await _mediator.Send(business);
 
             if (response.Errors.Any()) return BadRequest(response.Errors);
 

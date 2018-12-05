@@ -19,7 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Web2.Test", "Projec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.SignalR.Test", "Project.SignalR.Test\Project.SignalR.Test.csproj", "{4319DC92-DE05-4DEB-B034-59FA73C1466E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Signatures", "Project.Signatures\Project.Signatures.csproj", "{FA640B2C-04E3-48AD-AEA2-3363EB72BC94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Signatures", "Project.Signatures\Project.Signatures.csproj", "{FA640B2C-04E3-48AD-AEA2-3363EB72BC94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UdpTest", "UdpTest", "{8456AC92-E871-4343-8B0B-51E99779DC8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpServer", "UdpServer\UdpServer.csproj", "{B35F6585-9A0E-4A6C-AF58-DCBB86FCA8F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpClient", "UdpClient\UdpClient.csproj", "{ECC26D4C-FE99-4608-8709-7147985749FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +69,21 @@ Global
 		{FA640B2C-04E3-48AD-AEA2-3363EB72BC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA640B2C-04E3-48AD-AEA2-3363EB72BC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA640B2C-04E3-48AD-AEA2-3363EB72BC94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B35F6585-9A0E-4A6C-AF58-DCBB86FCA8F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B35F6585-9A0E-4A6C-AF58-DCBB86FCA8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B35F6585-9A0E-4A6C-AF58-DCBB86FCA8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B35F6585-9A0E-4A6C-AF58-DCBB86FCA8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECC26D4C-FE99-4608-8709-7147985749FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECC26D4C-FE99-4608-8709-7147985749FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECC26D4C-FE99-4608-8709-7147985749FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECC26D4C-FE99-4608-8709-7147985749FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B35F6585-9A0E-4A6C-AF58-DCBB86FCA8F9} = {8456AC92-E871-4343-8B0B-51E99779DC8C}
+		{ECC26D4C-FE99-4608-8709-7147985749FB} = {8456AC92-E871-4343-8B0B-51E99779DC8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F8FFC56C-00AD-4ED8-80D2-8026F95D7179}
